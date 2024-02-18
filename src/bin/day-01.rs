@@ -1,11 +1,15 @@
 use std::fs;
 
-fn part1(str: String) -> u64 {
-    let nums: Vec<_> = str
-        .split('\n')
+fn parse_nums(str: &str) -> Vec<u64> {
+    str.split('\n')
         .filter(|x| !x.is_empty())
-        .map(|x| x.parse::<u64>().unwrap())
-        .collect();
+        .map(str::parse)
+        .collect::<Result<_, _>>()
+        .unwrap()
+}
+
+fn part1(str: &str) -> u64 {
+    let nums = parse_nums(str);
     for (i, x) in nums.iter().enumerate() {
         for y in nums.iter().skip(i + 1) {
             if x + y == 2020 {
@@ -16,12 +20,8 @@ fn part1(str: String) -> u64 {
     unreachable!("No solution");
 }
 
-fn part2(str: String) -> u64 {
-    let nums: Vec<_> = str
-        .split('\n')
-        .filter(|x| !x.is_empty())
-        .map(|x| x.parse::<u64>().unwrap())
-        .collect();
+fn part2(str: &str) -> u64 {
+    let nums = parse_nums(str);
     for (i, x) in nums.iter().enumerate() {
         for (j, y) in nums.iter().enumerate().skip(i + 1) {
             for z in nums.iter().skip(j + 1) {
@@ -41,8 +41,8 @@ fn main() {
 299
 675
 1456";
-    println!("{}", part1(example1.to_string()));
-    println!("{}", part1(fs::read_to_string("inputs/01").unwrap()));
-    println!("{}", part2(example1.to_string()));
-    println!("{}", part2(fs::read_to_string("inputs/01").unwrap()));
+    println!("{}", part1(example1));
+    println!("{}", part1(&fs::read_to_string("inputs/01").unwrap()));
+    println!("{}", part2(example1));
+    println!("{}", part2(&fs::read_to_string("inputs/01").unwrap()));
 }
