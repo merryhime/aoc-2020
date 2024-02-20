@@ -13,7 +13,7 @@ struct Coord {
 }
 
 impl Map<'_> {
-    fn init<'a>(data: &'a str) -> Map<'a> {
+    fn init(data: &str) -> Map<'_> {
         let data: Vec<&[u8]> = data.lines().map(str::as_bytes).collect();
         let height = data.len();
         Map { data, height }

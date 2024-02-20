@@ -7,7 +7,7 @@ fn is_valid(str: &str) -> Option<bool> {
         let count = s.split("").filter(|&c| c == ch).count();
         Some(min <= count && count <= max)
     } else {
-        println!("{}", str);
+        println!("{str}");
         None
     }
 }
@@ -19,7 +19,7 @@ fn is_valid2(str: &str) -> Option<bool> {
         let chars = s.split("").collect::<Vec<_>>();
         Some([a, b].iter().filter(|&&i| chars[i] == ch).count() == 1)
     } else {
-        println!("{}", str);
+        println!("{str}");
         None
     }
 }
