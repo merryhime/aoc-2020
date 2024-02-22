@@ -1,7 +1,5 @@
 use std::fs;
 
-
-
 fn parse(input: &str) -> Vec<Vec<(&str, &str)>> {
     let re = regex::Regex::new("\n\n").unwrap();
     re.split(input)
@@ -13,11 +11,9 @@ fn parse(input: &str) -> Vec<Vec<(&str, &str)>> {
         .collect()
 }
 
-fn is_valid(p: &Vec<(&str, &str)>) -> bool {
+fn is_valid(p: &[(&str, &str)]) -> bool {
     let fields = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"];
-    fields
-        .iter()
-        .all(|f| p.iter().any(|(a, _)| a == f))
+    fields.iter().all(|f| p.iter().any(|(a, _)| a == f))
 }
 
 fn is_field_valid(field_name: &str, field_value: &str) -> bool {
@@ -48,7 +44,7 @@ fn is_field_valid(field_name: &str, field_value: &str) -> bool {
                 && field_value
                     .chars()
                     .skip(1)
-                    .all(|c| ('a'..='f').contains(&c) || (c >= '0' || c <= '9'))
+                    .all(|c| ('a'..='f').contains(&c) || ('0'..='9').contains(&c))
         }
         "ecl" => ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"].contains(&field_value),
         "pid" => field_value.len() == 9 && field_value.chars().all(|c| char::is_ascii_digit(&c)),
@@ -56,18 +52,18 @@ fn is_field_valid(field_name: &str, field_value: &str) -> bool {
     }
 }
 
-fn is_valid2(p: &Vec<(&str, &str)>) -> bool {
+fn is_valid2(p: &[(&str, &str)]) -> bool {
     if !is_valid(p) {
         return false;
     }
     p.iter().all(|(n, v)| is_field_valid(n, v))
 }
 
-fn part1(s: &Vec<Vec<(&str, &str)>>) -> usize {
+fn part1(s: &[Vec<(&str, &str)>]) -> usize {
     s.iter().filter(|p| is_valid(p)).count()
 }
 
-fn part2(s: &Vec<Vec<(&str, &str)>>) -> usize {
+fn part2(s: &[Vec<(&str, &str)>]) -> usize {
     s.iter().filter(|p| is_valid2(p)).count()
 }
 
