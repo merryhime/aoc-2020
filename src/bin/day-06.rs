@@ -4,7 +4,7 @@ use std::fs;
 
 fn count_qns_in_group(s: &str) -> usize {
     s.chars()
-        .filter(|c| char::is_ascii_alphabetic(c))
+        .filter(char::is_ascii_alphabetic)
         .unique()
         .count()
 }
@@ -17,7 +17,7 @@ fn part1(s: &str) -> usize {
 fn count_occurances_in_group(s: &str) -> usize {
     let c = s
         .chars()
-        .filter(|c| char::is_ascii_alphabetic(c))
+        .filter(char::is_ascii_alphabetic)
         .collect::<Counter<_>>();
     let num = s.lines().count();
     c.iter().filter(|(_, &v)| v == num).count()
